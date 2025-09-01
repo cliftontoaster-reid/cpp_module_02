@@ -17,63 +17,104 @@ static void printRaw(const Fixed &obj, const char *name) {
 }
 
 int main() {
-  std::cout << "=== Fixed Class Demo ===" << std::endl;
+  std::cout << "========================================" << std::endl;
+  std::cout << "         Fixed Class Comprehensive Demo" << std::endl;
+  std::cout << "========================================" << std::endl
+            << std::endl;
 
-  // Default constructor
-  Fixed a;
-  std::cout << "a: " << a << std::endl;
-  printRaw(a, "a");
+  // Constructors
+  Fixed defaultObj;
+  Fixed fromInt(10);
+  Fixed fromFloat(42.42f);
+  Fixed copyOfInt = fromInt;
 
-  // Int constructor
-  Fixed b(10);
-  std::cout << "b: " << b << " (from int 10)" << std::endl;
-  printRaw(b, "b");
+  std::cout << "Constructors:" << std::endl;
+  std::cout << " defaultObj        : " << defaultObj << " (default)"
+            << std::endl;
+  printRaw(defaultObj, "defaultObj");
 
-  // Float constructor
-  Fixed c(42.42f);
-  std::cout << "c: " << c << " (from float 42.42)" << std::endl;
-  printRaw(c, "c");
+  std::cout << " fromInt (10)      : " << fromInt << std::endl;
+  printRaw(fromInt, "fromInt");
 
-  // Copy constructor
-  Fixed d = b;
-  std::cout << "d: " << d << " (copy of b)" << std::endl;
-  printRaw(d, "d");
+  std::cout << " fromFloat (42.42) : " << fromFloat << std::endl;
+  printRaw(fromFloat, "fromFloat");
 
-  // Assignment operator
-  a = c;
-  std::cout << "a after assignment from c: " << a << std::endl;
-  printRaw(a, "a (after assignment)");
+  std::cout << " copyOfInt (copy)  : " << copyOfInt << std::endl;
+  printRaw(copyOfInt, "copyOfInt");
 
-  // Addition operator
-  Fixed result = b + c;
-  std::cout << "b + c = " << result << std::endl;
-  printRaw(result, "b + c");
+  // Assignment
+  defaultObj = fromFloat;
+  std::cout << "After assignment defaultObj = fromFloat: " << defaultObj
+            << std::endl;
+  printRaw(defaultObj, "defaultObj (after assignment)");
 
-  // Subtraction operator
-  Fixed sub1 = c - b;
-  std::cout << "c - b = " << sub1 << std::endl;
-  printRaw(sub1, "c - b");
+  // Arithmetic
+  std::cout << std::endl << "Arithmetic operations:" << std::endl;
+  Fixed sum = fromInt + fromFloat;
+  std::cout << " 10 + 42.42 = " << sum << std::endl;
+  printRaw(sum, "10 + 42.42");
 
-  // Multiplication demo
-  Fixed mul1 = b * c;
-  std::cout << "b * c = " << mul1 << std::endl;
-  printRaw(mul1, "b * c");
+  Fixed diff = fromFloat - fromInt;
+  std::cout << " 42.42 - 10 = " << diff << std::endl;
+  printRaw(diff, "42.42 - 10");
+
+  Fixed prod = fromInt * fromFloat;
+  std::cout << " 10 * 42.42 = " << prod << std::endl;
+  printRaw(prod, "10 * 42.42");
 
   Fixed half(0.5f);
-  Fixed mul2 = c * half;
-  std::cout << "c * 0.5 = " << mul2 << std::endl;
-  printRaw(mul2, "c * 0.5");
+  Fixed scaled = fromFloat * half;
+  std::cout << " 42.42 * 0.5 = " << scaled << std::endl;
+  printRaw(scaled, "42.42 * 0.5");
 
-  // Division demo
-  Fixed div1 = c / b;
-  std::cout << "c / b = " << div1 << std::endl;
-  printRaw(div1, "c / b");
+  Fixed quot = fromFloat / fromInt;
+  std::cout << " 42.42 / 10 = " << quot << std::endl;
+  printRaw(quot, "42.42 / 10");
 
-  // Explicit toFloat conversion
-  std::cout << "c as float: " << c.toFloat() << std::endl;
-  printRaw(c, "c (final)");
+  // toFloat and raw accessors
+  std::cout << std::endl << "Conversions & accessors:" << std::endl;
+  std::cout << " fromFloat.toFloat(): " << fromFloat.toFloat() << std::endl;
+  std::cout << " getRawBits(fromFloat): " << fromFloat.getRawBits()
+            << std::endl;
+  std::cout << " getFractionalBits(): " << Fixed::getFractionalBits()
+            << std::endl;
 
-  std::cout << "=== End of Demo ===" << std::endl;
+  // Comparisons
+  std::cout << std::endl << "Comparisons:" << std::endl;
+  std::cout << " fromInt < fromFloat : " << (fromInt < fromFloat) << std::endl;
+  std::cout << " fromInt <= copyOfInt: " << (fromInt <= copyOfInt) << std::endl;
+  std::cout << " fromInt == copyOfInt: " << (fromInt == copyOfInt) << std::endl;
+  std::cout << " fromFloat != fromInt : " << (fromFloat != fromInt)
+            << std::endl;
+
+  // Increment / Decrement
+  std::cout << std::endl << "Increment / Decrement:" << std::endl;
+  Fixed incDemo(1.0f);
+  std::cout << " start: " << incDemo << std::endl;
+  std::cout << " prefix ++: " << ++incDemo << std::endl;
+  std::cout << " after prefix: " << incDemo << std::endl;
+  std::cout << " postfix ++: " << incDemo++ << std::endl;
+  std::cout << " after postfix: " << incDemo << std::endl;
+  std::cout << " prefix --: " << --incDemo << std::endl;
+  std::cout << " postfix --: " << incDemo-- << std::endl;
+  std::cout << " final: " << incDemo << std::endl;
+  printRaw(incDemo, "incDemo (final)");
+
+  // min / max
+  std::cout << std::endl << "Min / Max helpers:" << std::endl;
+  Fixed &rmin = Fixed::min(fromInt, fromFloat);
+  const Fixed &cmin = Fixed::min(fromInt, fromFloat);
+  Fixed &rmax = Fixed::max(fromInt, fromFloat);
+  const Fixed &cmax = Fixed::max(fromInt, fromFloat);
+  std::cout << " min (non-const ref) : " << rmin << std::endl;
+  std::cout << " min (const ref)     : " << cmin << std::endl;
+  std::cout << " max (non-const ref) : " << rmax << std::endl;
+  std::cout << " max (const ref)     : " << cmax << std::endl;
+
+  std::cout << std::endl
+            << "========================================" << std::endl;
+  std::cout << "                 End of Demo" << std::endl;
+  std::cout << "========================================" << std::endl;
 
   return 0;
 }

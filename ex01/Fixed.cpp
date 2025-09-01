@@ -145,8 +145,46 @@ Fixed Fixed::operator/(const Fixed &other) const {
   return result;
 }
 
+Fixed &Fixed::operator++() {
+  int new_value = _value + (1 << _fractionalBits);
+  _value = new_value;
+  return *this;
+}
+
+Fixed Fixed::operator++(int) {
+  // Postfix increment
+  Fixed temp = *this;
+  _value += (1 << _fractionalBits);
+  return temp;
+}
+
+Fixed &Fixed::operator--() {
+  // Prefix decrement: subtract one unit in fixed-point (1 << fractional bits)
+  _value -= (1 << _fractionalBits);
+  return *this;
+}
+
+Fixed Fixed::operator--(int) {
+  // Postfix decrement
+  Fixed temp = *this;
+  _value -= (1 << _fractionalBits);
+  return temp;
+}
+
 float Fixed::toFloat() const {
   return static_cast<float>(_value) / (1 << _fractionalBits);
+}
+
+Fixed &Fixed::min(Fixed &a, Fixed &b) { return (a < b) ? a : b; }
+
+const Fixed &Fixed::min(const Fixed &a, const Fixed &b) {
+  return (a < b) ? a : b;
+}
+
+Fixed &Fixed::max(Fixed &a, Fixed &b) { return (a > b) ? a : b; }
+
+const Fixed &Fixed::max(const Fixed &a, const Fixed &b) {
+  return (a > b) ? a : b;
 }
 
 int Fixed::getRawBits() const { return _value; }
