@@ -14,6 +14,6 @@ class Point {
   Point& operator=(const Point& other);
   ~Point();
 
-  Fixed getX() const { return x; }
-  Fixed getY() const { return y; }
+  Fixed getX() const;
+  Fixed getY() const;
 };
