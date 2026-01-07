@@ -1,8 +1,9 @@
-#include "Fixed.hpp"
 #include <iostream>
 
+#include "Fixed.hpp"
+
 // Helper to print raw fixed-point internals
-static void printRaw(const Fixed &obj, const char *name) {
+static void printRaw(const Fixed& obj, const char* name) {
   int raw = obj.getRawBits();
   unsigned int uraw = static_cast<unsigned int>(raw);
   int fb = Fixed::getFractionalBits();
@@ -10,8 +11,7 @@ static void printRaw(const Fixed &obj, const char *name) {
   std::cout << name << " raw: " << raw << " (hex 0x" << std::hex << uraw
             << std::dec << ")";
   std::cout << ", fractional raw: " << frac_raw << " (binary ";
-  for (int i = fb - 1; i >= 0; --i)
-    std::cout << ((frac_raw >> i) & 1);
+  for (int i = fb - 1; i >= 0; --i) std::cout << ((frac_raw >> i) & 1);
   std::cout << ") -> " << static_cast<float>(frac_raw) / (1 << fb) << std::endl
             << std::endl;
 }

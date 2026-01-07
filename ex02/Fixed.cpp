@@ -1,4 +1,5 @@
 #include "Fixed.hpp"
+
 #include <cmath>
 
 Fixed::Fixed() : _value(0) {
@@ -8,19 +9,19 @@ Fixed::Fixed() : _value(0) {
 #endif
 }
 
-Fixed::Fixed(const Fixed &other) : _value(other._value) {
+Fixed::Fixed(const Fixed& other) : _value(other._value) {
 #ifdef FIXED_DEBUG
   std::cout << "Copy constructor called" << std::endl;
 #endif
 }
 
-Fixed::Fixed(const int &other) : _value(other << _fractionalBits) {
+Fixed::Fixed(const int& other) : _value(other << _fractionalBits) {
 #ifdef FIXED_DEBUG
   std::cout << "Int constructor called" << std::endl;
 #endif
 }
 
-Fixed::Fixed(const float &other) {
+Fixed::Fixed(const float& other) {
   // Use roundf to convert the float into the fixed-point representation
   // by multiplying by 2^_fractionalBits and rounding to nearest.
   _value = static_cast<int>(
@@ -31,7 +32,7 @@ Fixed::Fixed(const float &other) {
 #endif
 }
 
-Fixed &Fixed::operator=(const Fixed &other) {
+Fixed& Fixed::operator=(const Fixed& other) {
   if (this != &other) {
     _value = other._value;
   }
@@ -47,36 +48,36 @@ Fixed::~Fixed() {
 #endif
 }
 
-std::ostream &operator<<(std::ostream &os, const Fixed &obj) {
+std::ostream& operator<<(std::ostream& os, const Fixed& obj) {
   os << obj.toFloat();
   return os;
 }
 
-bool Fixed::operator>(const Fixed &other) const {
+bool Fixed::operator>(const Fixed& other) const {
   return _value > other._value;
 }
 
-bool Fixed::operator<(const Fixed &other) const {
+bool Fixed::operator<(const Fixed& other) const {
   return _value < other._value;
 }
 
-bool Fixed::operator>=(const Fixed &other) const {
+bool Fixed::operator>=(const Fixed& other) const {
   return _value >= other._value;
 }
 
-bool Fixed::operator<=(const Fixed &other) const {
+bool Fixed::operator<=(const Fixed& other) const {
   return _value <= other._value;
 }
 
-bool Fixed::operator==(const Fixed &other) const {
+bool Fixed::operator==(const Fixed& other) const {
   return _value == other._value;
 }
 
-bool Fixed::operator!=(const Fixed &other) const {
+bool Fixed::operator!=(const Fixed& other) const {
   return _value != other._value;
 }
 
-Fixed Fixed::operator+(const Fixed &other) const {
+Fixed Fixed::operator+(const Fixed& other) const {
   // We find wich of the two values has more fractional bits
   // and we align the other value to that before adding
   Fixed result;
@@ -93,7 +94,7 @@ Fixed Fixed::operator+(const Fixed &other) const {
   return result;
 }
 
-Fixed Fixed::operator-(const Fixed &other) const {
+Fixed Fixed::operator-(const Fixed& other) const {
   // We find wich of the two values has more fractional bits
   // and we align the other value to that before subtracting
   Fixed result;
@@ -110,7 +111,7 @@ Fixed Fixed::operator-(const Fixed &other) const {
   return result;
 }
 
-Fixed Fixed::operator*(const Fixed &other) const {
+Fixed Fixed::operator*(const Fixed& other) const {
   // Multiply two fixed-point values.
   // Use 64-bit intermediate to avoid overflow during multiplication,
   // then shift back by fractional bits. Add rounding for nearest.
@@ -131,7 +132,7 @@ Fixed Fixed::operator*(const Fixed &other) const {
   return result;
 }
 
-Fixed Fixed::operator/(const Fixed &other) const {
+Fixed Fixed::operator/(const Fixed& other) const {
   // Divide two fixed-point values.
   // Use 64-bit intermediate to avoid overflow during shifting,
   // then shift back by fractional bits. Add rounding for nearest.
@@ -159,7 +160,7 @@ Fixed Fixed::operator/(const Fixed &other) const {
   return result;
 }
 
-Fixed &Fixed::operator++() {
+Fixed& Fixed::operator++() {
   int new_value = _value + (1 << _fractionalBits);
   _value = new_value;
   return *this;
@@ -172,7 +173,7 @@ Fixed Fixed::operator++(int) {
   return temp;
 }
 
-Fixed &Fixed::operator--() {
+Fixed& Fixed::operator--() {
   // Prefix decrement: subtract one unit in fixed-point (1 << fractional bits)
   _value -= (1 << _fractionalBits);
   return *this;
@@ -189,15 +190,20 @@ float Fixed::toFloat() const {
   return static_cast<float>(_value) / (1 << _fractionalBits);
 }
 
-Fixed &Fixed::min(Fixed &a, Fixed &b) { return (a < b) ? a : b; }
+int Fixed::toInt() const {
+  // Convert fixed-point to integer by shifting right by fractional bits
+  return _value >> _fractionalBits;
+}
 
-const Fixed &Fixed::min(const Fixed &a, const Fixed &b) {
+Fixed& Fixed::min(Fixed& a, Fixed& b) { return (a < b) ? a : b; }
+
+const Fixed& Fixed::min(const Fixed& a, const Fixed& b) {
   return (a < b) ? a : b;
 }
 
-Fixed &Fixed::max(Fixed &a, Fixed &b) { return (a > b) ? a : b; }
+Fixed& Fixed::max(Fixed& a, Fixed& b) { return (a > b) ? a : b; }
 
-const Fixed &Fixed::max(const Fixed &a, const Fixed &b) {
+const Fixed& Fixed::max(const Fixed& a, const Fixed& b) {
   return (a > b) ? a : b;
 }
 

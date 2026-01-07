@@ -1,79 +1,80 @@
-#include "Point.hpp"
 #include <iostream>
 
-// prototype for bsp
-bool bsp(Point const a, Point const b, Point const c, Point const point);
+#include "Fixed.hpp"
 
-int main() {
-  std::cout << "==========================================" << std::endl;
-  std::cout << "   Point-in-Triangle (BSP) Demo" << std::endl;
-  std::cout << "==========================================" << std::endl;
+int main(void) {
+  Fixed a;
+  Fixed const b(Fixed(5.05f) * Fixed(2));
+
+  std::cout << "----------- Subject main tests -----------" << std::endl;
+  std::cout << a << std::endl;
+  std::cout << ++a << std::endl;
+  std::cout << a << std::endl;
+  std::cout << a++ << std::endl;
+  std::cout << a << std::endl;
+  std::cout << b << std::endl;
+  std::cout << Fixed::max(a, b) << std::endl;
+  std::cout << "----------------------------------------" << std::endl;
   std::cout << std::endl;
 
-  // Define the triangle
-  Point a(0.0f, 0.0f);
-  Point b(10.0f, 0.0f);
-  Point c(0.0f, 10.0f);
+  std::cout << "----------- My tests -----------" << std::endl;
+  Fixed val1(10);
+  Fixed val2(20);
+  Fixed val3(10);
 
-  std::cout << "Triangle vertices:" << std::endl;
-  std::cout << "  A: (" << a.getX().toFloat() << ", " << a.getY().toFloat()
-            << ")" << std::endl;
-  std::cout << "  B: (" << b.getX().toFloat() << ", " << b.getY().toFloat()
-            << ")" << std::endl;
-  std::cout << "  C: (" << c.getX().toFloat() << ", " << c.getY().toFloat()
-            << ")" << std::endl;
+  // Comparison operators
+  std::cout << "--- Comparison operators ---" << std::endl;
+  std::cout << "val1(10) > val2(20): " << (val1 > val2) << std::endl;
+  std::cout << "val1(10) < val2(20): " << (val1 < val2) << std::endl;
+  std::cout << "val1(10) >= val3(10): " << (val1 >= val3) << std::endl;
+  std::cout << "val1(10) <= val3(10): " << (val1 <= val3) << std::endl;
+  std::cout << "val1(10) == val2(20): " << (val1 == val2) << std::endl;
+  std::cout << "val1(10) == val3(10): " << (val1 == val3) << std::endl;
+  std::cout << "val1(10) != val2(20): " << (val1 != val2) << std::endl;
+  std::cout << "val1(10) != val3(10): " << (val1 != val3) << std::endl;
+  std::cout << "----------------------------" << std::endl;
   std::cout << std::endl;
 
-  // Test points
-  Point p1(1.0f, 1.0f);   // inside
-  Point p2(5.0f, 0.0f);   // on edge
-  Point p3(0.0f, 0.0f);   // vertex
-  Point p4(10.0f, 10.0f); // outside
-
-  // Test p1
-  std::cout << "Testing point P1: (" << p1.getX().toFloat() << ", "
-            << p1.getY().toFloat() << ") - should be INSIDE the triangle."
-            << std::endl;
-  bool result1 = bsp(a, b, c, p1);
-  std::cout << "  Result: "
-            << (result1 ? "YES, it's inside!" : "NO, it's not inside.")
-            << std::endl;
+  // Arithmetic operators
+  std::cout << "--- Arithmetic operators ---" << std::endl;
+  Fixed res_add = val1 + val2;
+  Fixed res_sub = val2 - val1;
+  Fixed res_mul = Fixed(2.5f) * Fixed(2);
+  Fixed res_div = Fixed(10.0f) / Fixed(2);
+  std::cout << "val1(10) + val2(20) = " << res_add << std::endl;
+  std::cout << "val2(20) - val1(10) = " << res_sub << std::endl;
+  std::cout << "Fixed(2.5f) * Fixed(2) = " << res_mul << std::endl;
+  std::cout << "Fixed(10.0f) / Fixed(2) = " << res_div << std::endl;
+  std::cout << "----------------------------" << std::endl;
   std::cout << std::endl;
 
-  // Test p2
-  std::cout << "Testing point P2: (" << p2.getX().toFloat() << ", "
-            << p2.getY().toFloat() << ") - on the EDGE of the triangle."
-            << std::endl;
-  bool result2 = bsp(a, b, c, p2);
-  std::cout << "  Result: "
-            << (result2 ? "YES, it's inside!"
-                        : "NO, it's not inside (on edge).")
-            << std::endl;
+  // Increment/Decrement operators
+  std::cout << "--- Increment/Decrement operators ---" << std::endl;
+  Fixed c(5);
+  std::cout << "c is " << c << std::endl;
+  std::cout << "++c is " << ++c << std::endl;
+  std::cout << "c is " << c << std::endl;
+  std::cout << "c++ is " << c++ << std::endl;
+  std::cout << "c is " << c << std::endl;
+  std::cout << "--c is " << --c << std::endl;
+  std::cout << "c is " << c << std::endl;
+  std::cout << "c-- is " << c-- << std::endl;
+  std::cout << "c is " << c << std::endl;
+  std::cout << "-----------------------------------" << std::endl;
   std::cout << std::endl;
 
-  // Test p3
-  std::cout << "Testing point P3: (" << p3.getX().toFloat() << ", "
-            << p3.getY().toFloat() << ") - at a VERTEX of the triangle."
-            << std::endl;
-  bool result3 = bsp(a, b, c, p3);
-  std::cout << "  Result: "
-            << (result3 ? "YES, it's inside!"
-                        : "NO, it's not inside (at vertex).")
-            << std::endl;
-  std::cout << std::endl;
+  // Min/Max functions
+  std::cout << "--- Min/Max functions ---" << std::endl;
+  Fixed v1(10);
+  Fixed v2(20);
+  const Fixed cv1(10);
+  const Fixed cv2(20);
 
-  // Test p4
-  std::cout << "Testing point P4: (" << p4.getX().toFloat() << ", "
-            << p4.getY().toFloat() << ") - OUTSIDE the triangle." << std::endl;
-  bool result4 = bsp(a, b, c, p4);
-  std::cout << "  Result: "
-            << (result4 ? "YES, it's inside!" : "NO, it's not inside.")
-            << std::endl;
-  std::cout << std::endl;
-
-  std::cout << "==========================================" << std::endl;
-  std::cout << "   Demo complete! BSP function tested." << std::endl;
-  std::cout << "==========================================" << std::endl;
+  std::cout << "min(v1, v2): " << Fixed::min(v1, v2) << std::endl;
+  std::cout << "max(v1, v2): " << Fixed::max(v1, v2) << std::endl;
+  std::cout << "min(cv1, cv2): " << Fixed::min(cv1, cv2) << std::endl;
+  std::cout << "max(cv1, cv2): " << Fixed::max(cv1, cv2) << std::endl;
+  std::cout << "---------------------------" << std::endl;
 
   return 0;
 }
