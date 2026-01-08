@@ -24,8 +24,8 @@ int main(void) {
 
   // Comparison operators
   std::cout << "--- Comparison operators ---" << std::endl;
-  std::cout << "val1(10) > val2(20): " << (val1 > val2) << std::endl;
-  std::cout << "val1(10) < val2(20): " << (val1 < val2) << std::endl;
+  std::cout << "val1(10) >  val2(20): " << (val1 > val2) << std::endl;
+  std::cout << "val1(10) <  val2(20): " << (val1 < val2) << std::endl;
   std::cout << "val1(10) >= val3(10): " << (val1 >= val3) << std::endl;
   std::cout << "val1(10) <= val3(10): " << (val1 <= val3) << std::endl;
   std::cout << "val1(10) == val2(20): " << (val1 == val2) << std::endl;
@@ -41,9 +41,9 @@ int main(void) {
   Fixed res_sub = val2 - val1;
   Fixed res_mul = Fixed(2.5f) * Fixed(2);
   Fixed res_div = Fixed(10.0f) / Fixed(2);
-  std::cout << "val1(10) + val2(20) = " << res_add << std::endl;
-  std::cout << "val2(20) - val1(10) = " << res_sub << std::endl;
-  std::cout << "Fixed(2.5f) * Fixed(2) = " << res_mul << std::endl;
+  std::cout << "val1(10)     + val2(20) = " << res_add << std::endl;
+  std::cout << "val2(20)     - val1(10) = " << res_sub << std::endl;
+  std::cout << "Fixed(2.5f)  * Fixed(2) = " << res_mul << std::endl;
   std::cout << "Fixed(10.0f) / Fixed(2) = " << res_div << std::endl;
   std::cout << "----------------------------" << std::endl;
   std::cout << std::endl;
@@ -51,15 +51,15 @@ int main(void) {
   // Increment/Decrement operators
   std::cout << "--- Increment/Decrement operators ---" << std::endl;
   Fixed c(5);
-  std::cout << "c is " << c << std::endl;
+  std::cout << "c   is " << c << std::endl;
   std::cout << "++c is " << ++c << std::endl;
-  std::cout << "c is " << c << std::endl;
+  std::cout << "c   is " << c << std::endl;
   std::cout << "c++ is " << c++ << std::endl;
-  std::cout << "c is " << c << std::endl;
+  std::cout << "c   is " << c << std::endl;
   std::cout << "--c is " << --c << std::endl;
-  std::cout << "c is " << c << std::endl;
+  std::cout << "c   is " << c << std::endl;
   std::cout << "c-- is " << c-- << std::endl;
-  std::cout << "c is " << c << std::endl;
+  std::cout << "c   is " << c << std::endl;
   std::cout << "-----------------------------------" << std::endl;
   std::cout << std::endl;
 
@@ -70,8 +70,8 @@ int main(void) {
   const Fixed cv1(10);
   const Fixed cv2(20);
 
-  std::cout << "min(v1, v2): " << Fixed::min(v1, v2) << std::endl;
-  std::cout << "max(v1, v2): " << Fixed::max(v1, v2) << std::endl;
+  std::cout << "min(v1, v2):   " << Fixed::min(v1, v2) << std::endl;
+  std::cout << "max(v1, v2):   " << Fixed::max(v1, v2) << std::endl;
   std::cout << "min(cv1, cv2): " << Fixed::min(cv1, cv2) << std::endl;
   std::cout << "max(cv1, cv2): " << Fixed::max(cv1, cv2) << std::endl;
   std::cout << "---------------------------" << std::endl;
