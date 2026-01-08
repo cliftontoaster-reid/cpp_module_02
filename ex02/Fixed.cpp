@@ -161,7 +161,7 @@ Fixed Fixed::operator/(const Fixed& other) const {
 }
 
 Fixed& Fixed::operator++() {
-  int new_value = _value + (1 << _fractionalBits);
+  int new_value = _value + 1;
   _value = new_value;
   return *this;
 }
@@ -169,20 +169,20 @@ Fixed& Fixed::operator++() {
 Fixed Fixed::operator++(int) {
   // Postfix increment
   Fixed temp = *this;
-  _value += (1 << _fractionalBits);
+  _value += 1;
   return temp;
 }
 
 Fixed& Fixed::operator--() {
   // Prefix decrement: subtract one unit in fixed-point (1 << fractional bits)
-  _value -= (1 << _fractionalBits);
+  _value -= 1;
   return *this;
 }
 
 Fixed Fixed::operator--(int) {
   // Postfix decrement
   Fixed temp = *this;
-  _value -= (1 << _fractionalBits);
+  _value -= 1;
   return temp;
 }
 
