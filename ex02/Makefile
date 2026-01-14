@@ -10,8 +10,6 @@ NAME     = 	 fixed
 SRCS     = \
 	$(SRC_DIR)/main.cpp \
 	$(SRC_DIR)/Fixed.cpp \
-	$(SRC_DIR)/Point.cpp \
-	$(SRC_DIR)/bsp.cpp \
 
 OBJS     = $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(SRCS))
 # TESTOBJS = $(patsubst $(TEST_DIR)/%.c,$(TEST_OBJD)/%.o,$(TESTS)) $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(filter-out $(SRC_DIR)/main.c,$(SRCS)))
